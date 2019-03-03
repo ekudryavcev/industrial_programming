@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  send:
+    build: sender/
+    environment:
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/%2F
+    depends_on:
+      - rabbitmq
+  receive:
+    build: receiver/
+    environment:
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/%2F
+    depends_on:
+      - rabbitmq
+  rabbitmq:
+    image: rabbitmq:3.7.9-alpine
+    expose:
+      - 5672
